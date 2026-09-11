@@ -20,5 +20,6 @@ public class Spawner : MonoBehaviour
     private void SpawnObject(InputAction.CallbackContext ctx)
     {
         Instantiate(objectToSpawn, transform.position, transform.rotation);
+        print("Object spawned");
     }
 }
