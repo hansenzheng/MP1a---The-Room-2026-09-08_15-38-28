@@ -3,7 +3,8 @@ using UnityEngine.InputSystem;
 
 public class LightSwitch : MonoBehaviour
 {
-    private AudioSource audioSource;
+    private AudioSource audioSource1;
+    [SerializeField] private AudioSource audioSource2;
     [SerializeField] private Light light;
     private bool isSwitched;
     [SerializeField] private InputActionReference inputAction;
@@ -11,7 +12,8 @@ public class LightSwitch : MonoBehaviour
     void Awake()
     {
         light.GetComponent<Light>();
-        audioSource = GetComponent<AudioSource>();
+        audioSource1 = GetComponent<AudioSource>();
+        audioSource2 = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -29,19 +31,21 @@ public class LightSwitch : MonoBehaviour
     {
         if (light)
         {
-            if (audioSource) 
+            if (audioSource1) 
             {
                 print("Light switched");
-                audioSource.Play();
+                audioSource1.Play();
             }
 
             if (!isSwitched)
             {
                 light.color = Color.indianRed;
+                audioSource2.Stop();
             } 
             else
             {
                 light.color = Color.white;
+                audioSource2.Play();
             }
             isSwitched = !isSwitched;
         }
