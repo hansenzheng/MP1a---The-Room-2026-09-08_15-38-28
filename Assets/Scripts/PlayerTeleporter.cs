@@ -4,11 +4,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerTeleporter : MonoBehaviour
 {
-    [SerializeField] private XROrigin xrOrigin;
+    [SerializeField] private GameObject xrOrigin;
     [SerializeField] private Transform inRoomLocation;
     [SerializeField] private Transform outsideLocation;
     private bool isSwitched;
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
     [SerializeField] private InputActionReference inputAction;
 
     private void Awake()
@@ -39,11 +39,15 @@ public class PlayerTeleporter : MonoBehaviour
             audioSource.Play();
             if (isSwitched)
             {
+                print("Switching to in room location");
                 xrOrigin.transform.position = inRoomLocation.position;
+                xrOrigin.transform.rotation = inRoomLocation.rotation;
             }
             else
             {
+                print("Switching to outside location");
                 xrOrigin.transform.position = outsideLocation.position;
+                xrOrigin.transform.rotation = outsideLocation.rotation;
             }
             isSwitched = !isSwitched;
         }

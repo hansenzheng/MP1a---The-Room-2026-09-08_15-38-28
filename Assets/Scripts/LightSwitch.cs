@@ -3,18 +3,11 @@ using UnityEngine.InputSystem;
 
 public class LightSwitch : MonoBehaviour
 {
-    private AudioSource audioSource1;
-    [SerializeField] private AudioSource audioSource2;
+    [SerializeField] private AudioSource lightSwitchAudioSource;
+    [SerializeField] private AudioSource airVentAudioSource;
     [SerializeField] private Light light;
-    private bool isSwitched;
+    private bool isSwitched = true;
     [SerializeField] private InputActionReference inputAction;
-
-    void Awake()
-    {
-        light.GetComponent<Light>();
-        audioSource1 = GetComponent<AudioSource>();
-        audioSource2 = GetComponent<AudioSource>();
-    }
 
     private void OnEnable()
     {
@@ -31,21 +24,25 @@ public class LightSwitch : MonoBehaviour
     {
         if (light)
         {
-            if (audioSource1) 
+            if (lightSwitchAudioSource) 
             {
                 print("Light switched");
-                audioSource1.Play();
+                lightSwitchAudioSource.Play();
             }
 
-            if (!isSwitched)
+            // Light is on, turn it off and stop the air vent audio source
+            if (isSwitched)
             {
+                print("air vent off");
                 light.color = Color.indianRed;
-                audioSource2.Stop();
+                airVentAudioSource.Stop();
             } 
+            // Light is off, turn it on and play the air vent audio source
             else
             {
+                print("air vent on");
                 light.color = Color.white;
-                audioSource2.Play();
+                airVentAudioSource.Play();
             }
             isSwitched = !isSwitched;
         }
